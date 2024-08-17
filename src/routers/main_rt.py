@@ -43,12 +43,9 @@ async def prank_player_getnick(message: Message, command: CommandObject):
             async with Client(settings.SERVER_IP, settings.SERVER_PORT, settings.SERVER_PASSWORD) as client:
                 resp = await client.send_cmd(f'/title {msg} times 0t 70t 20t')
                 await client.send_cmd(f'/title {msg} title "пидор"')
-            print(resp)
             await message.answer("Успешно")
         else:
             await message.answer('Такого игрока не существует')
-            print(msg)
-            print(resp)
 
     else:
         async with Client(settings.SERVER_IP, settings.SERVER_PORT, settings.SERVER_PASSWORD) as client:
@@ -59,12 +56,9 @@ async def prank_player_getnick(message: Message, command: CommandObject):
             async with Client(settings.SERVER_IP, settings.SERVER_PORT, settings.SERVER_PASSWORD) as client:
                 resp = await client.send_cmd(f'/title {msg} times 0t 70t 20t')
                 await client.send_cmd(f'/title {msg} title "{text}"')
-            print(resp)
             await message.answer("Успешно")
         else:
             await message.answer('Такого игрока не существует')
-            print(msg)
-            print(resp)
 
 @main_rt.message(Command('tell'))
 async def send_message(message: Message, command: CommandObject):
