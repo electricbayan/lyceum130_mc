@@ -9,11 +9,6 @@ from src.routers.main_rt import main_rt
 from config import settings
 
 
-# @dp.message(Command('docs'))
-# async
-    
-
-
 async def main():
     load_dotenv()
     dp = Dispatcher()
