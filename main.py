@@ -6,10 +6,8 @@ from aiogram import Router
 from aiogram.filters.command import Command
 from aiogram.types import Message, BotCommand
 from aiogram import Bot, Dispatcher
-from aiogram.filters import StateFilter, CommandObject
-from aiogram.fsm.context import FSMContext
+from aiogram.filters import CommandObject
 
-from src.states import PrankState
 
 from config import settings
 
@@ -80,16 +78,20 @@ async def prank_player_getnick(message: Message, command: CommandObject):
 async def send_message(message: Message, command: CommandObject):
     try:
         args = command.args.split(" ")
+        if len(args):
+            async with Client(settings.SERVER_IP, settings.SERVER_PORT, settings.SERVER_PASSWORD) as client:
+                # print(args)
+                text = " ".join(args) + "\n\n@" + message.from_user.first_name
+                await client.send_cmd(f'/say {text}')
+
+        else:
+            pass
     except AttributeError:
         await message.answer('Синтаксис команды: /tell <text>')
-    if len(args) == 1:
-        async with Client(settings.SERVER_IP, settings.SERVER_PORT, settings.SERVER_PASSWORD) as client:
-            # print(args)
-            await client.send_cmd(f'/say {" ".join(args)}')
 
-    else:
-        pass
 
+# @dp.message(Command('docs'))
+# async
     
 
 
@@ -99,7 +101,7 @@ async def main():
                 BotCommand(command="/tell", description="Написать в чат"),
                 BotCommand(command='/prank', description="Пранкануть чувачка")]
     bot = Bot(settings.BOT_TOKEN)
-    bot.set_my_commands(commands)
+    await bot.set_my_commands(commands)
     await dp.start_polling(bot)
 
 
